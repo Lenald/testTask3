@@ -1,10 +1,11 @@
 <?php
 class Second extends First
 {
+    private $letter = "B";
 
     public function getLetter()
     {
-        echo "B\n";
+        echo $this->letter ."\n";
     }
 
 }

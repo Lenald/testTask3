@@ -1,6 +1,7 @@
 <?php
 class First
 {
+    private $letter = "A";
 
     public function getClassname()
     {
@@ -9,6 +10,6 @@ class First
 
     public function getLetter()
     {
-        echo "A\n";
+        echo $this->letter ."\n";
     }
 }
