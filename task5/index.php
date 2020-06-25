@@ -1,5 +1,7 @@
 <?php
 
+require_once 'autoload.php';
+
 use Domain\Transactions;
 use Domain\DomainException;
 
@@ -19,7 +21,7 @@ try {
             <th>Имя</th>
             <th>Деньги</th>
         </tr>";
-    foreach ($balances = $row) {
+    foreach ($balances as $row) {
         echo "<tr><td>{$row['fullname']}</td><td>{$row['balance']}</td></tr>";
     }
     echo "</table>";
@@ -28,7 +30,7 @@ try {
 
     //Task 5.b
     //Самый транзакционный город
-    $mostTransactionedCity = $transactions->getMostTransactionedCity()
+    $mostTransactionedCity = $transactions->getMostTransactionedCity();
     echo "Самый транзакционный город: {$mostTransactionedCity[0]}<br>";
 
 
@@ -44,7 +46,7 @@ try {
             <th>to_person_id</th>
             <th>amount</th>
         </tr>";
-    foreach ($oneCityTransactions = $row) {
+    foreach ($oneCityTransactions as $row) {
         echo "<tr>
             <td>{$row['transaction_id']}</td>
             <td>{$row['from_person_id']}</td>

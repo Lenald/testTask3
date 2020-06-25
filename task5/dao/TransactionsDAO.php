@@ -8,9 +8,9 @@ class TransactionsDAO extends DAOConnection
     public function __construct()
     {   
         try {
-            $this->connection = parent->getConnection();
+            $this->connection = parent::connect();
         } catch (DAOException $e) {
-            die("Не удалось подключиться к базе данных. Это конец...")
+            die("Не удалось подключиться к базе данных. Это конец...");
         }
     }
 
