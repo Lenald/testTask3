@@ -70,31 +70,30 @@ class TransactionsDAO extends DAOConnection
     public function getTransacionsInsideOneCity()
     {
         $query = "
-        SELECT *
+        SELECT  `transactions`.`transaction_id`,
+                `from_person_id`,
+                `to_person_id`,
+                `amount`
             FROM `transactions`
-            WHERE `transaction_id` IN (
-                SELECT  `transactions`.`transaction_id`
-                    FROM `transactions`
-                    INNER JOIN (
-                        /* города отправителей */
-                        SELECT `city_id` AS `from_city`, `transaction_id`
-                            FROM `persons` AS `p`
-                            INNER JOIN `transactions` AS `t`
-                                ON `t`.`from_person_id`=`p`.`id`
-                            WHERE `t`.`from_person_id`=`p`.`id`
-                        ) AS `from_city_table`
-                        ON `from_city_table`.`transaction_id`=`transactions`.`transaction_id`
-                    INNER JOIN (
-                        /* города получателей */
-                        SELECT `city_id` AS `to_city`, `transaction_id`
-                            FROM `persons` AS `p`
-                            INNER JOIN `transactions` AS `t`
-                                ON `t`.`to_person_id`=`p`.`id`
-                            WHERE `t`.`to_person_id`=`p`.`id`
-                        ) AS `to_city_table`
-                        ON `to_city_table`.`transaction_id`=`transactions`.`transaction_id`
-                    WHERE `from_city`=`to_city`
-            )
+            INNER JOIN (
+                /* города отправителей */
+                SELECT `city_id` AS `from_city`, `transaction_id`
+                    FROM `persons` AS `p`
+                    INNER JOIN `transactions` AS `t`
+                        ON `t`.`from_person_id`=`p`.`id`
+                    WHERE `t`.`from_person_id`=`p`.`id`
+                ) AS `from_city_table`
+                ON `from_city_table`.`transaction_id`=`transactions`.`transaction_id`
+            INNER JOIN (
+                /* города получателей */
+                SELECT `city_id` AS `to_city`, `transaction_id`
+                    FROM `persons` AS `p`
+                    INNER JOIN `transactions` AS `t`
+                        ON `t`.`to_person_id`=`p`.`id`
+                    WHERE `t`.`to_person_id`=`p`.`id`
+                ) AS `to_city_table`
+                ON `to_city_table`.`transaction_id`=`transactions`.`transaction_id`
+            WHERE `from_city`=`to_city`
         ";
         
         try {
